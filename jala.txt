@@ -1,0 +1,103 @@
+1
+select a.cname,b.onum from customer a, orders b where a.cnum=b.cnum and a.cname='cisneros' order by a.cname;
+
+2
+select a.cname,b.amt from customer a,orders b where a.cnum=b.cnum and amt>(select avg(amt) as amt from orders)group by cname;
+
+
+4
+select sum(amt) from orders group by snum having sum(amt)>(select max(amt) from orders);
+
+5
+select * from orders where odate='1996-03-10';
+
+6
+select a.snum,b.sname,count(*) as cust_count from customer a, salespeople b where a.snum=b.snum group by a.snum;
+
+8
+select a.cname,b.amt from customer a,orders b where a.cnum=b.cnum and amt>(select avg(amt) as amt from orders)group by cname;
+
+9
+select odate,sum(amt) from orders group by odate;
+
+10
+select cnum,cname,rating from customer where rating>=(select max(rating) from customer);
+
+11
+select a.sname,a.city,b.cname,b.city as cus_city from salespeople a,customer b where a.snum=b.snum and a.city!=b.city;
+
+12
+select * from customer where (select count(*) from customer where city='san jose')>1;
+
+13
+select count(a.sname) from salespeople a,customer b where a.snum=b.snum;
+
+14
+select a.sname,b.cname from salespeople a,customer b where a.snum=b.snum limit 4;
+
+15
+select a.sname,a.snum from salespeople a,(select snu,count(*) as cust_count from customer group b snum having cust_count=1) b where a.snum=b.snum;
+
+16
+select e.sname,d.count_cus from salespeople e,(select count(c.onum) as count_cus from salespeople a,customer b,orders c where a.snum=b.snum and b.cnum=c.cnum group by a.sname) d where e.sname=d.sname and count_cus>1;
+
+17
+select sname,snum from salespeople where exists(select rating from customer where rating=300);
+
+19
+select a.sname,a.city,b.cname,b.city as cus_city from salespeople a,customer b where a.snum=b.snum and a.city!=b.city;
+
+20
+select e.sname,d.count_cus from salespeople e,(select count(c.onum) as count_cus from salespeople a,customer b,orders c where a.snum=b.snum and b.cnum=c.cnum group by a.sname) d where e.sname=d.sname and count_cus>1;
+
+
+21
+select a.sname,a.city,b.cname,b.city as cus_city from salespeople a,customer b where a.snum=b.snum and a.city!=b.city;
+
+22
+select a.sname,b.cname from salespeople a,customer b where a.snum=b.snum order by a.sname;
+
+23
+select * from customer where rating>(select max(rating) from customer where city='Rome');
+
+24
+select * from orders where amt>(amt(odate='1996-06-10' order by cnum));
+
+25
+select a.cname,b.onum,b.amt from customer a,orders b where amt<(a.cname where city='sanjose') order by cname;
+
+26
+select * from customer where rating>(select max(rating) from customer where city='Paris');
+
+27
+select a.sname,b.rating from salespeople a,customer b where a.snum=b.snum;
+
+28
+select a.sname,a.city,b.cname,b.city as cus_city from salespeople a,customer b where a.snum=b.snum and a.city!=b.city;
+
+29
+SELECT * FROM orders WHERE amt < ANY(SELECT amt FROM orders a, customer b WHERE  a.customer_id=b.customer_id AND b.city='London');
+
+30
+select distinct sname,comm,city from salespeople where city='london'
+
+31
+select a.sname,a.snum,b.city from orders a left outer join customer b on a.snum=b.snum;
+
+
+33
+Select cname, cities, rating, ‘Higher Rating’from cust where rating >= 200UNIONSelect cname, cities, rating, ‘Lower Rating’from custwhere rating < 200;
+
+34
+select e.sname,d.count_cus from salespeople e,(select count(c.onum) as count_cus from salespeople a,customer b,orders c where a.snum=b.snum and b.cnum=c.cnum group by a.sname) d where e.sname=d.sname and count_cus>1;
+
+
+35
+Select 'Customer Number ' || cnum "Code "from custwhere city = 'San Jose'UNIONselect 'Salesperson Number '||snumfrom salespeoplewhere city = 'San Jose'UNION ALLselect 'Order Number '|| onumfrom Orderswhere odate = '03-OCT-94';
+
+
+36
+Select snum, snamefrom salespeoplewhere snum in ( select snum from custwhere cust.snum = salespeople.snum andcust.city = 'London')and city = 'London';
+
+
+
